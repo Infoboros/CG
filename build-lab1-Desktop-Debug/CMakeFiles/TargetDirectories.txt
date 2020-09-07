@@ -1,0 +1,4 @@
+/home/ouroboros/work/CG/build-lab1-Desktop-Debug/CMakeFiles/rebuild_cache.dir
+/home/ouroboros/work/CG/build-lab1-Desktop-Debug/CMakeFiles/edit_cache.dir
+/home/ouroboros/work/CG/build-lab1-Desktop-Debug/CMakeFiles/lab1.dir
+/home/ouroboros/work/CG/build-lab1-Desktop-Debug/CMakeFiles/lab1_autogen.dir
