@@ -6,6 +6,24 @@
 
 #IncludeRegexTransform: 
 
+/home/ouroboros/work/CG/build-lab1-Desktop-Debug/lab1_autogen/EWIEGA46WW/moc_mainwindow.cpp
+mainwindow.h
+/home/ouroboros/work/CG/build-lab1-Desktop-Debug/lab1_autogen/EWIEGA46WW/mainwindow.h
+QtCore/qbytearray.h
+-
+QtCore/qmetatype.h
+-
+
+/home/ouroboros/work/CG/build-lab1-Desktop-Debug/lab1_autogen/mocs_compilation.cpp
+EWIEGA46WW/moc_mainwindow.cpp
+/home/ouroboros/work/CG/build-lab1-Desktop-Debug/lab1_autogen/EWIEGA46WW/moc_mainwindow.cpp
+
+/home/ouroboros/work/CG/lab1/main.cpp
+mainwindow.h
+/home/ouroboros/work/CG/lab1/mainwindow.h
+QApplication
+-
+
 /home/ouroboros/work/CG/lab1/mainwindow.cpp
 mainwindow.h
 /home/ouroboros/work/CG/lab1/mainwindow.h

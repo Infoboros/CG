@@ -27,6 +27,15 @@ private:
 
     // Обработчик события прокрутки колеса мыши
     void wheelEvent(QWheelEvent* );
+
+    //Больщой квадрат
+    void drawBigRect(QPainter &painter, float aBigRect);
+    //Маленькие окружности
+    void drawSmallCircle(QPainter &painter, float bigRectRadius);
+    //Маленьких ромбика
+    void drawSmalRomb(QPainter &painter, float widthR, float heightR, float bigRectRadius, float radius);
+    //Маленький круг
+    void drawSmallCenterCircle(QPainter &painter);
 };
 
 #endif // MAINWINDOW_H

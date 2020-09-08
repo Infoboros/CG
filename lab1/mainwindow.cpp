@@ -40,58 +40,45 @@ void MainWindow::paintEvent(QPaintEvent* event)
     // Задаём область прорисовки круга
     QRectF rect = QRectF(-radius, -radius, radius*2, radius*2);
 
-    // Рисуем большой круг красно-оранжевым цветом
+    // Рисуем большой круг
     painter.setBrush(purpl);
     painter.setPen(Pen);
     painter.drawEllipse(rect);
 
     painter.setBrush(QBrush());
 
-    //Больщой квадрат
-    painter.setBrush(QBrush(Qt::blue));
+    //Расчеты
     float aBigRect = radius*sqrt(2);
-    QRectF bigRect = QRectF(- aBigRect/2.,-aBigRect/2., aBigRect, aBigRect);
-    painter.drawRect(bigRect);
+    float bigRectRadius = aBigRect/2;
+    float heightR = (radius - aBigRect) / 2.;
+    float widthR = aBigRect/2.;
+    float smallCircleRadius = aBigRect/4;
+    float aSmallRect = aBigRect/(2*sqrt(2));
+
+    //Большой квадрат
+    drawBigRect(painter, aBigRect);
 
     //Четыре маленькие окружности
-    painter.setBrush(QBrush(Qt::red));
-    float bigRectRadius = aBigRect/2;
-    QRectF smallLeftsTopsRect = QRectF(-bigRectRadius, -bigRectRadius, bigRectRadius, bigRectRadius);//Маленький квадратик слева вверху
     for (int i = 0; i < 4; ++i) {
-        painter.drawEllipse(smallLeftsTopsRect);
+        drawSmallCircle(painter, bigRectRadius);
         painter.rotate(90);
     }
 
     //Четыре маленьких ромбика
-    float heightR = (radius - aBigRect) / 2.;
-    float widthR = aBigRect/2.;
-    QPointF leftTopR = QPointF(-widthR/2., bigRectRadius/2. + radius/2. - heightR/2.);
-    QPointF pathRomb[5] = {
-                            QPointF(leftTopR.x(), leftTopR.y() + heightR/2.),
-                            QPointF(leftTopR.x() + widthR/2., leftTopR.y()),
-                            QPointF(leftTopR.x() + widthR, leftTopR.y() + heightR/2.),
-                            QPointF(leftTopR.x() + widthR/2., leftTopR.y() + heightR),
-                            QPointF(leftTopR.x(), leftTopR.y() + heightR/2.),
-    };
     for (int i = 0; i < 4; ++i) {
-        QPainterPath rombPathPainter;
-        rombPathPainter.moveTo(pathRomb[0]);
-        for (int path = 0; path < 5; ++path) {
-            rombPathPainter.lineTo(pathRomb[path]);
-        };
-        painter.drawPath(rombPathPainter);
+        drawSmalRomb(painter, widthR, heightR, bigRectRadius, radius);
         painter.rotate(90);
     }
 
     //Маленький круг
     painter.setBrush(QBrush(Qt::blue));
-    float smallCircleRadius = aBigRect/4;
+
     QRectF smallCircleRect = QRectF(-smallCircleRadius, -smallCircleRadius, smallCircleRadius*2, smallCircleRadius*2);
     painter.drawEllipse(smallCircleRect);
 
     //Маленький квадрат
     painter.setBrush(QBrush(Qt::red));
-    float aSmallRect = aBigRect/(2*sqrt(2));
+
     QRectF smallRect = QRectF(- aSmallRect/2.,-aSmallRect/2., aSmallRect, aSmallRect);
     painter.rotate(45); //он должен быть перпендикулярен большому
     painter.drawRect(smallRect);
@@ -104,4 +91,38 @@ void MainWindow::wheelEvent(QWheelEvent* wheelevent)
 {
     angle += wheelevent->delta() / 10;
     repaint(); // Обновляем окно
+}
+
+void MainWindow::drawBigRect(QPainter &painter, float aBigRect)
+{
+    //Больщой квадрат
+    painter.setBrush(QBrush(Qt::blue));
+    QRectF bigRect = QRectF(- aBigRect/2.,-aBigRect/2., aBigRect, aBigRect);
+    painter.drawRect(bigRect);
+}
+
+void MainWindow::drawSmallCircle(QPainter &painter, float bigRectRadius)
+{
+    painter.setBrush(QBrush(Qt::red));
+
+    QRectF smallLeftsTopsRect = QRectF(-bigRectRadius, -bigRectRadius, bigRectRadius, bigRectRadius);
+    painter.drawEllipse(smallLeftsTopsRect);
+}
+
+void MainWindow::drawSmalRomb(QPainter &painter, float widthR, float heightR, float bigRectRadius, float radius)
+{
+    QPointF leftTopR = QPointF(-widthR/2., bigRectRadius/2. + radius/2. - heightR/2.);
+    QPointF pathRomb[5] = {
+                            QPointF(leftTopR.x(), leftTopR.y() + heightR/2.),
+                            QPointF(leftTopR.x() + widthR/2., leftTopR.y()),
+                            QPointF(leftTopR.x() + widthR, leftTopR.y() + heightR/2.),
+                            QPointF(leftTopR.x() + widthR/2., leftTopR.y() + heightR),
+                            QPointF(leftTopR.x(), leftTopR.y() + heightR/2.),
+    };
+    QPainterPath rombPathPainter;
+    rombPathPainter.moveTo(pathRomb[0]);
+    for (int path = 0; path < 5; ++path) {
+        rombPathPainter.lineTo(pathRomb[path]);
+    };
+    painter.drawPath(rombPathPainter);
 }
