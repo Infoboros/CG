@@ -89,16 +89,20 @@ void MainWindow::paintEvent(QPaintEvent* event)
 // Обработчик события прокрутки колеса мыши
 void MainWindow::wheelEvent(QWheelEvent* wheelevent)
 {
-    angle += wheelevent->delta() / 10;
+    angle += wheelevent->delta() / 100;
     repaint(); // Обновляем окно
 }
 
 void MainWindow::drawBigRect(QPainter &painter, float aBigRect)
 {
     //Больщой квадрат
+    QLinearGradient gradient(0, -aBigRect/2., 0, aBigRect/2.);
+    gradient.setColorAt(0,Qt::green);
+    gradient.setColorAt(1, Qt::blue);
+
     painter.setBrush(QBrush(Qt::blue));
     QRectF bigRect = QRectF(- aBigRect/2.,-aBigRect/2., aBigRect, aBigRect);
-    painter.drawRect(bigRect);
+    painter.fillRect(bigRect, gradient);
 }
 
 void MainWindow::drawSmallCircle(QPainter &painter, float bigRectRadius)
