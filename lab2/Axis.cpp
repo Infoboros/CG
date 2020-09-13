@@ -2,7 +2,7 @@
 // Created by ouroboros on 13.09.2020.
 //
 
-#include "../Headers/Axis.h"
+#include "Axis.h"
 #include <cmath>
 
 void Axis::step(double &k, double &h, double &m, double &n) {
@@ -72,10 +72,11 @@ void AbscissaAxis::draw(QPainter &painter, WorldToScreenConverter &converter) {
                      converter.convert(endR.x(), endR.y()));
 
     double k = (converter.getX2() - converter.getX1()) / (converter.x2 - converter.x1);
-    double h = (converter.getX2() - converter.getX1()) / 100;
+    double h = (converter.getX2() - converter.getX1()) / 40;
     double m, n;
 
     step(k, h, m, n);
+    currentStep = k;
     double radiusW = k / 100.;
     double radiusH = (converter.y2 - converter.y1) / 50.;
     bool flag = true;
@@ -111,10 +112,11 @@ void OrdinateAxis::draw(QPainter &painter, WorldToScreenConverter &converter) {
                      converter.convert(endR.x(), endR.y()));
 
     double k = (converter.getY2() - converter.getY1()) / (converter.y2 - converter.y1);
-    double h = (converter.getY2() - converter.getY1()) / 100;
+    double h = (converter.getY2() - converter.getY1()) / 45.;
     double m, n;
 
     step(k, h, m, n);
+    currentStep = k;
     double radiusW = k / 100.;
     double radiusH = (converter.x2 - converter.x1) / 100.;
 

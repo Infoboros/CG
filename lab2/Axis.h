@@ -13,17 +13,20 @@
 #include "stdio.h"
 
 class Axis {
-public:
+protected:
     static void step(double &k, double &h, double &m, double &n);
+
+public:
     virtual void draw(QPainter &painter, WorldToScreenConverter &converter) = 0;
+    double currentStep;
 };
 
-class AbscissaAxis : Axis {
+class AbscissaAxis : public Axis {
 public:
     void draw(QPainter &painter, WorldToScreenConverter &converter);
 };
 
-class OrdinateAxis : Axis {
+class OrdinateAxis : public Axis {
 public:
     void draw(QPainter &painter, WorldToScreenConverter &converter);
 };

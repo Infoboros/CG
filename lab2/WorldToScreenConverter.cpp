@@ -2,7 +2,7 @@
 // Created by ouroboros on 13.09.2020.
 //
 
-#include "../Headers/WorldToScreenConverter.h"
+#include "WorldToScreenConverter.h"
 
 QPointF WorldToScreenConverter::convert(double x, double y) {
     double X2 = getX2();

@@ -2,7 +2,9 @@ cmake_minimum_required(VERSION 3.5)
 
 project(lab1 LANGUAGES CXX)
 
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
@@ -25,13 +27,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 add_executable(lab1
         main.cpp
-        Source/mainwindow.cpp
-        Headers/mainwindow.h
+        mainwindow.cpp
+        mainwindow.h
         mainwindow.ui
-        Headers/WorldToScreenConverter.h
-        Source/WorldToScreenConverter.cpp
-        Headers/Axis.h
-        Source/Axis.cpp Headers/CurveData.h)
+        WorldToScreenConverter.h
+        WorldToScreenConverter.cpp
+        Axis.h
+        Axis.cpp CurveData.h Chart.h Chart.cpp)
 
 
 target_link_libraries(lab1 PRIVATE Qt5::Widgets)
