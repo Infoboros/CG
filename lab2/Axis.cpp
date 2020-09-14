@@ -65,8 +65,11 @@ void Axis::step(double &k, double &h, double &m, double &n) {
 }
 
 void AbscissaAxis::draw(QPainter &painter, WorldToScreenConverter &converter) {
-    QPointF startR(converter.x1, 0);
-    QPointF endR(converter.x2, 0);
+    double offset = 0;
+    if (converter.y1 > 0)
+        offset = converter.y1;
+    QPointF startR(converter.x1, offset);
+    QPointF endR(converter.x2, offset);
 
     painter.drawLine(converter.convert(startR.x(), startR.y()),
                      converter.convert(endR.x(), endR.y()));
@@ -105,8 +108,11 @@ void AbscissaAxis::draw(QPainter &painter, WorldToScreenConverter &converter) {
 }
 
 void OrdinateAxis::draw(QPainter &painter, WorldToScreenConverter &converter) {
-    QPointF startR(0, converter.y1);
-    QPointF endR(0, converter.y2);
+    double offset = 0;
+    if (converter.x1 > 0)
+        offset = converter.x1;
+    QPointF startR(offset, converter.y1);
+    QPointF endR(offset, converter.y2);
 
     painter.drawLine(converter.convert(startR.x(), startR.y()),
                      converter.convert(endR.x(), endR.y()));
@@ -121,16 +127,16 @@ void OrdinateAxis::draw(QPainter &painter, WorldToScreenConverter &converter) {
     double radiusH = (converter.x2 - converter.x1) / 100.;
 
     for (double y = converter.y1; y <= converter.y2; y += k) {
-        QPointF leftTop = converter.convert(-radiusH, y + radiusW);
-        QPointF rightBot = converter.convert(+radiusH, y - radiusW);
+        QPointF leftTop = converter.convert(-radiusH + offset, y + radiusW);
+        QPointF rightBot = converter.convert(+radiusH + offset, y - radiusW);
         painter.drawRect(QRectF(leftTop, rightBot));
 
         char buf[80];
         sprintf(buf, "%7.2f", y);
         QString text(buf);
 
-        QPointF textLeftTop = converter.convert(-radiusH*10, y+radiusW*100);
-        QPointF textRightBot = converter.convert(-radiusH, y - radiusW*50);
+        QPointF textLeftTop = converter.convert(-radiusH*10 + offset, y+radiusW*100);
+        QPointF textRightBot = converter.convert(-radiusH + offset, y - radiusW*50);
         painter.setFont(QFont("", (textLeftTop.x() - textRightBot.x()) / text.length()));
         painter.drawText(QRectF(textLeftTop, textRightBot), Qt::AlignRight|Qt::AlignVCenter, text);
     }

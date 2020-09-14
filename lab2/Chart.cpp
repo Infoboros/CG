@@ -10,10 +10,41 @@ Chart::Chart(QWidget *parent)
         : QWidget(parent),
         curves({new SinCurveData(), new CosCurveData(), new LineCurveData()}),
         converter(0, 20, 0, 0, parent->rect()){
+    recalc();
+}
+
+void Chart::paintEvent(QPaintEvent *p_event) {
+    QPainter painter(this);
+    painter.fillRect(rect(), Qt::white);
+
+    converter.screen = rect();
+
+    AbscissaAxis abscissaAxis;
+    abscissaAxis.draw(painter, converter);
+
+    OrdinateAxis ordinateAxis;
+    ordinateAxis.draw(painter, converter);
+
+    for(auto &curve:curves){
+        painter.setPen(curve->getPen());
+        double step = abscissaAxis.currentStep;
+        QPointF oldP(converter.x1, curve->F(converter.x1));
+        QPointF newP;
+
+        for (double x = converter.x1; x <= converter.x2; x += step) {
+            painter.drawLine(converter.convert(oldP.x(), oldP.y()),
+                             converter.convert(newP.x(), newP.y()));
+            oldP = newP;
+            newP = QPointF(x, curve->F(x));
+        }
+    }
+}
+
+void Chart::recalc() {
     double minY = 9999999;
     double maxY = -9999999;
     for (auto & curve : curves){
-        for (double x = 0; x < 20; ++x) {
+        for (double x = converter.x1; x < converter.x2; ++x) {
             double result = curve->F(x);
             if (result < minY)
                 minY = result;
@@ -34,28 +65,21 @@ Chart::Chart(QWidget *parent)
     converter.y2 = maxY;
 }
 
-void Chart::paintEvent(QPaintEvent *p_event) {
-    QPainter painter(this);
+void Chart::setNewA(double a) {
+    if (a < converter.x2)
+        converter.x1 = a;
+    recalc();
+}
 
-    converter.screen = rect();
+void Chart::setNewB(double b) {
+    if (b > converter.x1)
+        converter.x2 = b;
+    recalc();
+}
 
-    AbscissaAxis abscissaAxis;
-    abscissaAxis.draw(painter, converter);
-
-    OrdinateAxis ordinateAxis;
-    ordinateAxis.draw(painter, converter);
-
-    for(auto &curve:curves){
-        painter.setPen(curve->getPen());
-        double step = abscissaAxis.currentStep/100.;
-        QPointF oldP(converter.x1, curve->F(converter.x1));
-        QPointF newP;
-
-        for (double x = converter.x1; x <= converter.x2; x += step) {
-            painter.drawLine(converter.convert(oldP.x(), oldP.y()),
-                             converter.convert(newP.x(), newP.y()));
-            oldP = newP;
-            newP = QPointF(x, curve->F(x));
-        }
-    }
+void Chart::reloadCurve(QString text) {
+    curves.clear();
+    for(auto curve: text.split('\n'))
+        curves.append(new TextCurveData(curve));
+    repaint();
 }

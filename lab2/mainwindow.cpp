@@ -16,3 +16,19 @@ MainWindow::~MainWindow()
 void MainWindow::paintEvent(QPaintEvent *p) {
     QWidget::paintEvent(p);
 }
+
+void MainWindow::on_aBox_valueChanged(double a)
+{
+    ui->centralwidget->setNewA(a);
+    ui->centralwidget->repaint();
+}
+
+void MainWindow::on_bBox_valueChanged(double b)
+{
+    ui->centralwidget->setNewB(b);
+    ui->centralwidget->repaint();
+}
+void MainWindow::on_pushButton_clicked()
+{
+    ui->centralwidget->reloadCurve(ui->plainTextEdit->toPlainText());
+}
