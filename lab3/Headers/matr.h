@@ -1,6 +1,8 @@
 #ifndef LAB1_MATR_H
 #define LAB1_MATR_H
 
+#include <QPointF>
+
 #include <utility>
 #include <vector>
 
@@ -19,6 +21,7 @@ public:
     int get_m();
     friend Matr operator *(Matr &m_l, Matr &m_r);
     friend type_arr operator *(Matr &m, type_arr &arr);
+    friend QPointF operator *(Matr &m, QPointF &p);
     type_arr & operator [](int index);
 };
 

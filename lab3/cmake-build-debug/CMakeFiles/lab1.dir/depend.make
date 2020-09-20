@@ -3,10 +3,37 @@
 
 CMakeFiles/lab1.dir/Source/matr.cpp.o: ../Headers/matr.h
 CMakeFiles/lab1.dir/Source/matr.cpp.o: ../Source/matr.cpp
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/QPointF
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qatomic.h
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qatomic_bootstrap.h
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qatomic_cxx11.h
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qatomic_msvc.h
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qbasicatomic.h
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qcompilerdetection.h
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qconfig-bootstrapped.h
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qconfig.h
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qflags.h
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qgenericatomic.h
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qglobal.h
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qglobalstatic.h
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qlogging.h
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qmutex.h
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qnamespace.h
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qnumeric.h
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qpoint.h
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qprocessordetection.h
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qsysinfo.h
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qsystemdetection.h
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qtcore-config.h
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qtypeinfo.h
+CMakeFiles/lab1.dir/Source/matr.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qversiontagging.h
 
+CMakeFiles/lab1.dir/lab1_autogen/mocs_compilation.cpp.o: ../Headers/afin_matr.h
+CMakeFiles/lab1.dir/lab1_autogen/mocs_compilation.cpp.o: ../Headers/matr.h
 CMakeFiles/lab1.dir/lab1_autogen/mocs_compilation.cpp.o: ../mainwindow.h
 CMakeFiles/lab1.dir/lab1_autogen/mocs_compilation.cpp.o: lab1_autogen/EWIEGA46WW/moc_mainwindow.cpp
 CMakeFiles/lab1.dir/lab1_autogen/mocs_compilation.cpp.o: lab1_autogen/mocs_compilation.cpp
+CMakeFiles/lab1.dir/lab1_autogen/mocs_compilation.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/QPointF
 CMakeFiles/lab1.dir/lab1_autogen/mocs_compilation.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qalgorithms.h
 CMakeFiles/lab1.dir/lab1_autogen/mocs_compilation.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qarraydata.h
 CMakeFiles/lab1.dir/lab1_autogen/mocs_compilation.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qatomic.h
@@ -119,9 +146,11 @@ CMakeFiles/lab1.dir/lab1_autogen/mocs_compilation.cpp.o: /usr/include/x86_64-lin
 CMakeFiles/lab1.dir/lab1_autogen/mocs_compilation.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtwidgetsglobal.h
 CMakeFiles/lab1.dir/lab1_autogen/mocs_compilation.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qwidget.h
 
+CMakeFiles/lab1.dir/main.cpp.o: ../Headers/afin_matr.h
 CMakeFiles/lab1.dir/main.cpp.o: ../Headers/matr.h
 CMakeFiles/lab1.dir/main.cpp.o: ../main.cpp
 CMakeFiles/lab1.dir/main.cpp.o: ../mainwindow.h
+CMakeFiles/lab1.dir/main.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/QPointF
 CMakeFiles/lab1.dir/main.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qalgorithms.h
 CMakeFiles/lab1.dir/main.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qarraydata.h
 CMakeFiles/lab1.dir/main.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qatomic.h
@@ -241,8 +270,11 @@ CMakeFiles/lab1.dir/main.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtwi
 CMakeFiles/lab1.dir/main.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtwidgetsglobal.h
 CMakeFiles/lab1.dir/main.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qwidget.h
 
+CMakeFiles/lab1.dir/mainwindow.cpp.o: ../Headers/afin_matr.h
+CMakeFiles/lab1.dir/mainwindow.cpp.o: ../Headers/matr.h
 CMakeFiles/lab1.dir/mainwindow.cpp.o: ../mainwindow.cpp
 CMakeFiles/lab1.dir/mainwindow.cpp.o: ../mainwindow.h
+CMakeFiles/lab1.dir/mainwindow.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/QPointF
 CMakeFiles/lab1.dir/mainwindow.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/QVariant
 CMakeFiles/lab1.dir/mainwindow.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qalgorithms.h
 CMakeFiles/lab1.dir/mainwindow.cpp.o: /usr/include/x86_64-linux-gnu/qt5/QtCore/qarraydata.h

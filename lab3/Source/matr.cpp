@@ -44,3 +44,11 @@ int Matr::get_n() {
 int Matr::get_m() {
     return m[0].size();
 }
+
+QPointF operator*(Matr &m, QPointF &p) {
+    type_arr mult_arr({p.x(), p.y()});
+    for (int i = 2; i < m.get_n(); ++i)
+        mult_arr.push_back(0);
+    type_arr tranfrom_arr = m*mult_arr;
+    return {tranfrom_arr[0], tranfrom_arr[1]};
+}

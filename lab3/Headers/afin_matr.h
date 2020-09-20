@@ -8,7 +8,8 @@
 #include "matr.h"
 #include "math.h"
 
-class RotateM : Matr {
+#define PI 3.14
+class RotateM : public Matr {
 public:
     explicit RotateM(double alfa) :
             Matr({
@@ -18,17 +19,17 @@ public:
                  }) {};
 };
 
-class TranslateM : Matr {
+class TranslateM : public Matr {
 public:
     explicit TranslateM(double x, double y) :
             Matr({
-                         {1, 0, x},
-                         {0, 1, y},
-                         {0, 0, 1}
+                         {1, 0, 0},
+                         {0, 1, 0},
+                         {x, y, 1}
                  }) {};
 };
 
-class DilatationM : Matr {
+class DilatationM : public Matr {
 public:
     explicit DilatationM(double kx, double ky) :
             Matr({
@@ -38,12 +39,22 @@ public:
                  }) {};
 };
 
-class ReflectionM : Matr {
+class ReflectionVM : public Matr {
 public:
-    explicit ReflectionM(double kx, double ky) :
+    explicit ReflectionVM() :
             Matr({
                          {1, 0, 0},
                          {0, -1, 0},
+                         {0, 0, 1}
+                 }) {};
+};
+
+class ReflectionHM : public Matr {
+public:
+    explicit ReflectionHM() :
+            Matr({
+                         {-1, 0, 0},
+                         {0, 1, 0},
                          {0, 0, 1}
                  }) {};
 };
