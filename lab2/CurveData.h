@@ -55,7 +55,7 @@ class TextCurveData : public CurveData {
 private:
     QString text;
 public:
-    TextCurveData(QString t): CurveData(QPen(QColor(rand()%255, rand()%255, rand()%255))), text(t){
+    TextCurveData(QString t = QString()): CurveData(QPen(QColor(rand()%255, rand()%255, rand()%255))), text(t){
 
     };
     double F(double x) override{

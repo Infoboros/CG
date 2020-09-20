@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ouroboros/work/CG/lab3/Headers/matr.h
+utility
+-
+vector
+-
+
+/home/ouroboros/work/CG/lab3/Source/matr.cpp
+../Headers/matr.h
+/home/ouroboros/work/CG/lab3/Headers/matr.h
+

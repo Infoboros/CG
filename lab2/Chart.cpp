@@ -31,7 +31,7 @@ void Chart::paintEvent(QPaintEvent *p_event) {
         QPointF oldP(converter.x1, curve->F(converter.x1));
         QPointF newP;
 
-        for (double x = converter.x1; x <= converter.x2; x += step) {
+        for (double x = converter.x1; x <= converter.x2 + step*2; x += step) {
             painter.drawLine(converter.convert(oldP.x(), oldP.y()),
                              converter.convert(newP.x(), newP.y()));
             oldP = newP;

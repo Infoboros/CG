@@ -83,7 +83,9 @@ void AbscissaAxis::draw(QPainter &painter, WorldToScreenConverter &converter) {
     double radiusW = k / 100.;
     double radiusH = (converter.y2 - converter.y1) / 50.;
     bool flag = true;
-    for (double x = converter.x1; x <= converter.x2; x += k) {
+    double start = floor(converter.x1 / k);
+    for (double x = start * k + 0.5; x <= converter.x2; x += k) {
+
         QPointF leftTop = converter.convert(x - radiusW, radiusH);
         QPointF rightBot = converter.convert(x + radiusW, -radiusH);
         painter.drawRect(QRectF(leftTop, rightBot));
@@ -91,16 +93,16 @@ void AbscissaAxis::draw(QPainter &painter, WorldToScreenConverter &converter) {
         char buf[80];
         sprintf(buf, "%7.2f", x);
         QString text(buf);
-        if (flag){
-            QPointF textLeftTop = converter.convert(x - radiusW*200, radiusH*3);
-            QPointF textRightBot = converter.convert(x + radiusW*200, radiusH);
+        if (flag) {
+            QPointF textLeftTop = converter.convert(x - radiusW * 200, radiusH * 3);
+            QPointF textRightBot = converter.convert(x + radiusW * 200, radiusH);
             painter.setFont(QFont("", (textLeftTop.x() - textRightBot.x()) / text.length()));
-            painter.drawText(QRectF(textLeftTop, textRightBot), Qt::AlignCenter, text);
-        }else{
-            QPointF textLeftTop = converter.convert(x - radiusW*200, -radiusH);
-            QPointF textRightBot = converter.convert(x + radiusW*200, -radiusH*5);
+            painter.drawText(QRectF(textLeftTop, textRightBot), Qt::AlignHCenter, text);
+        } else {
+            QPointF textLeftTop = converter.convert(x - radiusW * 200, -radiusH);
+            QPointF textRightBot = converter.convert(x + radiusW * 200, -radiusH * 5);
             painter.setFont(QFont("", (textLeftTop.x() - textRightBot.x()) / text.length()));
-            painter.drawText(QRectF(textLeftTop, textRightBot), Qt::AlignCenter, text);
+            painter.drawText(QRectF(textLeftTop, textRightBot), Qt::AlignHCenter, text);
         }
         flag = !flag;
     }
@@ -135,9 +137,9 @@ void OrdinateAxis::draw(QPainter &painter, WorldToScreenConverter &converter) {
         sprintf(buf, "%7.2f", y);
         QString text(buf);
 
-        QPointF textLeftTop = converter.convert(-radiusH*10 + offset, y+radiusW*100);
-        QPointF textRightBot = converter.convert(-radiusH + offset, y - radiusW*50);
+        QPointF textLeftTop = converter.convert(-radiusH * 10 + offset, y + radiusW * 100);
+        QPointF textRightBot = converter.convert(-radiusH + offset, y - radiusW * 50);
         painter.setFont(QFont("", (textLeftTop.x() - textRightBot.x()) / text.length()));
-        painter.drawText(QRectF(textLeftTop, textRightBot), Qt::AlignRight|Qt::AlignVCenter, text);
+        painter.drawText(QRectF(textLeftTop, textRightBot), Qt::AlignRight | Qt::AlignVCenter, text);
     }
 }
