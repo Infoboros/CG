@@ -11,6 +11,7 @@ Chart::Chart(QWidget *parent)
         curves({new SinCurveData(), new CosCurveData(), new LineCurveData()}),
         converter(0, 20, 0, 0, parent->rect()){
     recalc();
+    flag = true;
 }
 
 void Chart::paintEvent(QPaintEvent *p_event) {
@@ -28,6 +29,8 @@ void Chart::paintEvent(QPaintEvent *p_event) {
     for(auto &curve:curves){
         painter.setPen(curve->getPen());
         double step = abscissaAxis.currentStep;
+        if (flag)
+            step /=10000;
         QPointF oldP(converter.x1, curve->F(converter.x1));
         QPointF newP;
 
@@ -79,6 +82,7 @@ void Chart::setNewB(double b) {
 
 void Chart::reloadCurve(QString text) {
     curves.clear();
+    flag = false;
     for(auto curve: text.split('\n'))
         curves.append(new TextCurveData(curve));
     repaint();

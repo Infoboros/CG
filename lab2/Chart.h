@@ -32,6 +32,7 @@ public:
     void reloadCurve(QString text);
 
 private:
+    bool flag;
     WorldToScreenConverter converter;
     void paintEvent(QPaintEvent* p_event);
     void recalc();

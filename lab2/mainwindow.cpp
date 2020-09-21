@@ -31,4 +31,6 @@ void MainWindow::on_bBox_valueChanged(double b)
 void MainWindow::on_pushButton_clicked()
 {
     ui->centralwidget->reloadCurve(ui->plainTextEdit->toPlainText());
+    on_aBox_valueChanged(ui->textEdit_2->toPlainText().toDouble());
+    on_bBox_valueChanged(ui->textEdit_3->toPlainText().toDouble());
 }
