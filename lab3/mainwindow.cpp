@@ -91,7 +91,7 @@ void MainWindow::drawMini(QPainter &painter, int radius, Matr pr_m) {
     DilatationM dilatation(0.99, 0.99);
     int randomchik = rand() % 20;
     if (!randomchik) {
-        int random_figure = rand() % 2;
+        int random_figure = rand() % 3;
         int random_x = rand() % radius;
         int random_y = rand() % radius;
         int figure_radius = radius - sqrt(pow(random_x, 2) + pow(random_y, 2));
@@ -113,6 +113,17 @@ void MainWindow::drawMini(QPainter &painter, int radius, Matr pr_m) {
                     QPointF(random_x - figure_radius, random_y - figure_radius),
                     QPointF(random_x + figure_radius, random_y - figure_radius),
                     QPointF(random_x + figure_radius, random_y + figure_radius),
+            };
+            mini_figures.push_back(path);
+        } else if (random_figure == 2){
+            vector<QPointF> path = {
+                    QPointF(random_x, random_y),
+                    QPointF(random_x - figure_radius, random_y - figure_radius),
+                    QPointF(random_x + figure_radius, random_y - figure_radius),
+                    QPointF(random_x, random_y),
+                    QPointF(random_x + figure_radius, random_y + figure_radius),
+                    QPointF(random_x - figure_radius, random_y + figure_radius),
+                    QPointF(random_x, random_y),
             };
             mini_figures.push_back(path);
         }

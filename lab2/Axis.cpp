@@ -81,7 +81,7 @@ void AbscissaAxis::draw(QPainter &painter, WorldToScreenConverter &converter) {
                      converter.convert(endR.x(), endR.y()));
 
     double k = (converter.getX2() - converter.getX1()) / (converter.x2 - converter.x1);
-    double h = (converter.getX2() - converter.getX1()) / 40;
+    double h = (converter.getX2() - converter.getX1()) / 40.;
     double m, n;
 
     step(k, h, m, n);
