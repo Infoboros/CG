@@ -23,6 +23,8 @@ public:
 
 private:
     double angle;
+    double dilation;
+    bool dilation_flag;
     int check_delete;
     vector<vector<QPointF>> mini_figures;
     Ui::MainWindow *ui;

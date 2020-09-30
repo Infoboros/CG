@@ -6,7 +6,9 @@ MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent),
         ui(new Ui::MainWindow),
         angle(0),
-        check_delete(0) {
+        check_delete(0),
+        dilation_flag(true),
+        dilation(1.){
     ui->setupUi(this);
 }
 
@@ -41,6 +43,19 @@ void MainWindow::paintEvent(QPaintEvent *p) {
     Matr r_m = RotateM(angle);
     Matr r_m_pi = RotateM(angle + PI);
 
+    if(dilation < 0.01)
+        dilation_flag = false;
+    else if(dilation > 0.99)
+        dilation_flag = true;
+
+    if (dilation_flag)
+        dilation -= 0.01;
+    else
+        dilation += 0.01;
+
+    Matr dilatation = DilatationM(dilation, dilation);
+    Matr smallStar_m = dilatation*r_m;
+
     ReflectionHM reflectionH;
     for (int i = 0; i < 2; ++i) {
         painter.setBrush(QBrush(Qt::red));
@@ -50,7 +65,7 @@ void MainWindow::paintEvent(QPaintEvent *p) {
         painter.setBrush(QBrush(Qt::white));
         drawCircle(painter, small_radius);
         painter.setBrush(QBrush(Qt::green));
-        drawStar(painter, small_radius, small_radius / 2., r_m);
+        drawStar(painter, small_radius, small_radius / 2., smallStar_m);
 
         r_m = reflectionH * r_m;
         r_m_pi = reflectionH * r_m_pi;
@@ -87,8 +102,9 @@ void MainWindow::drawStar(QPainter &painter, double big_radius, double small_rad
 }
 
 void MainWindow::drawMini(QPainter &painter, int radius, Matr pr_m) {
-    RotateM rotate(PI / 10.);
+    RotateM rotate(PI / 100.);
     DilatationM dilatation(0.99, 0.99);
+    radius -= 20;
     int randomchik = rand() % 20;
     if (!randomchik) {
         int random_figure = rand() % 3;
@@ -146,8 +162,10 @@ void MainWindow::drawMini(QPainter &painter, int radius, Matr pr_m) {
 }
 
 void MainWindow::wheelEvent(QWheelEvent *wheelevent) {
-    angle += wheelevent->delta() / 100;
-    repaint();
-    usleep(160000);
+    while (true) {
+        angle += wheelevent->delta() / 100000.;
+        repaint();
+        usleep(16000);
+    }
 }
 
