@@ -10,14 +10,19 @@
 	"HEADERS" : 
 	[
 		[
-			"/home/ouroboros/work/CG/lab4/Headers/afin_matr.h",
+			"/home/ouroboros/work/CG/lab4/Headers/afin3d.h",
 			"MU",
-			"D2MWKIZDYH/moc_afin_matr.cpp"
+			"D2MWKIZDYH/moc_afin3d.cpp"
 		],
 		[
 			"/home/ouroboros/work/CG/lab4/Headers/matr.h",
 			"MU",
 			"D2MWKIZDYH/moc_matr.cpp"
+		],
+		[
+			"/home/ouroboros/work/CG/lab4/Headers/model3d.h",
+			"MU",
+			"D2MWKIZDYH/moc_model3d.cpp"
 		],
 		[
 			"/home/ouroboros/work/CG/lab4/mainwindow.h",
@@ -78,6 +83,7 @@
 	"SOURCES" : 
 	[
 		[ "/home/ouroboros/work/CG/lab4/Source/matr.cpp", "MU" ],
+		[ "/home/ouroboros/work/CG/lab4/Source/model3d.cpp", "MU" ],
 		[ "/home/ouroboros/work/CG/lab4/main.cpp", "MU" ],
 		[ "/home/ouroboros/work/CG/lab4/mainwindow.cpp", "MU" ]
 	],

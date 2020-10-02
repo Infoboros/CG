@@ -4,7 +4,7 @@
 #include "../Headers/matr.h"
 
 
-Matr operator*(Matr &m_l, Matr &m_r) {
+Matr operator*(Matr m_l, Matr m_r) {
     type_m result;
     for (int i = 0; i < m_l.get_n(); ++i) {
         result.push_back({});

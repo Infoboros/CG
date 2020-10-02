@@ -19,7 +19,7 @@ public:
     explicit Matr(type_m m): m(std::move(m)){};
     int get_n();
     int get_m();
-    friend Matr operator *(Matr &m_l, Matr &m_r);
+    friend Matr operator *(Matr m_l, Matr m_r);
     friend type_arr operator *(Matr &m, type_arr &arr);
     friend QPointF operator *(Matr &m, QPointF &p);
     type_arr & operator [](int index);

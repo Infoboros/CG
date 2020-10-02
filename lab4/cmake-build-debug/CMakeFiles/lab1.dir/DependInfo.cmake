@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/ouroboros/work/CG/lab4/Source/matr.cpp" "/home/ouroboros/work/CG/lab4/cmake-build-debug/CMakeFiles/lab1.dir/Source/matr.cpp.o"
+  "/home/ouroboros/work/CG/lab4/Source/model3d.cpp" "/home/ouroboros/work/CG/lab4/cmake-build-debug/CMakeFiles/lab1.dir/Source/model3d.cpp.o"
   "/home/ouroboros/work/CG/lab4/cmake-build-debug/lab1_autogen/mocs_compilation.cpp" "/home/ouroboros/work/CG/lab4/cmake-build-debug/CMakeFiles/lab1.dir/lab1_autogen/mocs_compilation.cpp.o"
   "/home/ouroboros/work/CG/lab4/main.cpp" "/home/ouroboros/work/CG/lab4/cmake-build-debug/CMakeFiles/lab1.dir/main.cpp.o"
   "/home/ouroboros/work/CG/lab4/mainwindow.cpp" "/home/ouroboros/work/CG/lab4/cmake-build-debug/CMakeFiles/lab1.dir/mainwindow.cpp.o"

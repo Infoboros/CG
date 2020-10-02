@@ -30,7 +30,7 @@ add_executable(lab1
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
-        Headers/matr.h Source/matr.cpp Headers/afin_matr.h)
+        Headers/matr.h Source/matr.cpp Headers/afin3d.h Headers/model3d.h Source/model3d.cpp)
 
 
 target_link_libraries(lab1 PRIVATE Qt5::Widgets)

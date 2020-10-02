@@ -114,13 +114,19 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/ouroboros/work/CG/lab4/Headers/afin_matr.h">
+		<Unit filename="/home/ouroboros/work/CG/lab4/Headers/afin3d.h">
 			<Option target="lab1"/>
 		</Unit>
 		<Unit filename="/home/ouroboros/work/CG/lab4/Headers/matr.h">
 			<Option target="lab1"/>
 		</Unit>
+		<Unit filename="/home/ouroboros/work/CG/lab4/Headers/model3d.h">
+			<Option target="lab1"/>
+		</Unit>
 		<Unit filename="/home/ouroboros/work/CG/lab4/Source/matr.cpp">
+			<Option target="lab1"/>
+		</Unit>
+		<Unit filename="/home/ouroboros/work/CG/lab4/Source/model3d.cpp">
 			<Option target="lab1"/>
 		</Unit>
 		<Unit filename="/home/ouroboros/work/CG/lab4/cmake-build-debug/lab1_autogen/mocs_compilation.cpp">
