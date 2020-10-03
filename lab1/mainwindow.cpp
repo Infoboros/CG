@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <math.h>
+#include <mainwindow.h>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -129,4 +131,8 @@ void MainWindow::drawSmalRomb(QPainter &painter, float widthR, float heightR, fl
         rombPathPainter.lineTo(pathRomb[path]);
     };
     painter.drawPath(rombPathPainter);
+}
+
+void MainWindow::drawAxis(QPainter &painter) {
+
 }

@@ -22,12 +22,19 @@ public:
     ~MainWindow();
 
 private:
-    double angle;
+    double oldXpos;
+
+    Matr dilatation;
+    Matr rotate;
 
     Ui::MainWindow *ui;
     void paintEvent(QPaintEvent *p) override;
     // Обработчик события прокрутки колеса мыши
-    void wheelEvent(QWheelEvent* );
+    void wheelEvent(QWheelEvent* ) override;
+    void mouseMoveEvent(QMouseEvent* );
+
+    void drawAxis(QPainter &painter, double radius);
+    void drawDinamic(QPainter &painter, double radius);
 };
 
 #endif // MAINWINDOW_H

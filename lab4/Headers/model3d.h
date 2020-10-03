@@ -9,7 +9,7 @@
 #include "afin3d.h"
 
 
-#define LEN_X 100
+#define LEN_X 70*k
 #define LEN_Y LEN_X/12.
 #define LEN_Z LEN_X
 
@@ -49,11 +49,14 @@ public:
     friend Object operator*(Matr, Object &);
 
     void draw(QPainter &painter);
+    void drawFront(QPainter &painter);
+    void drawPorf(QPainter &painter);
+    void drawUp(QPainter &painter);
 };
 
 class Tumba : public Object {
 public:
-    Tumba() :
+    Tumba(double k) :
             Object({}) {
         Model inSquare({Point3D(-LEN_X, -LEN_Y, LEN_Z),
                         Point3D(LEN_X, -LEN_Y, LEN_Z),

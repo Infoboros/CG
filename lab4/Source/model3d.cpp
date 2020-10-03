@@ -32,6 +32,20 @@ void Object::draw(QPainter &painter) {
         model.draw(painter);
 }
 
+void Object::drawFront(QPainter &painter) {
+    draw(painter);
+}
+
+void Object::drawPorf(QPainter &painter) {
+    Matr rt = RotateMY(90*RAD);
+    (rt*(*this)).draw(painter);
+}
+
+void Object::drawUp(QPainter &painter) {
+    Matr rt = RotateMX(90*RAD);
+    (rt*(*this)).draw(painter);
+}
+
 double Point3D::x() {
     return point[0];
 }
