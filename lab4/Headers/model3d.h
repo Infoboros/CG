@@ -6,6 +6,7 @@
 #define LAB1_MODEL3D_H
 
 #include <QPainter>
+#include <iostream>
 #include "afin3d.h"
 
 
@@ -56,20 +57,25 @@ public:
 
 class Tumba : public Object {
 public:
-    Tumba(double k) :
+    Tumba(double k, double sizeH) :
             Object({}) {
         Model inSquare({Point3D(-LEN_X, -LEN_Y, LEN_Z),
                         Point3D(LEN_X, -LEN_Y, LEN_Z),
                         Point3D(LEN_X, LEN_Y, LEN_Z),
                         Point3D(-LEN_X, LEN_Y, LEN_Z)});
+        Model centerSquare({Point3D(-LEN_X, -sizeH*k, LEN_Z),
+                            Point3D(LEN_X, -sizeH*k, LEN_Z),
+                            Point3D(LEN_X, sizeH*k, LEN_Z),
+                            Point3D(-LEN_X, sizeH*k, LEN_Z)});
         Matr rt_y_90 = RotateMY(90.*RAD);
         Matr t_up = TranslateM(0, -20*LEN_Y, 0);
         Matr t_down = TranslateM(0, 20*LEN_Y, 0);
         for (int i = 0; i < 4; ++i) {
-            vectorModels.push_back(inSquare);
+            vectorModels.push_back(centerSquare);
             vectorModels.push_back(t_up*inSquare);
             vectorModels.push_back(t_down*inSquare);
             inSquare = rt_y_90*inSquare;
+            centerSquare = rt_y_90*centerSquare;
         }
 
         Model outSquareL({Point3D(-LEN_X-2, -21*LEN_Y, LEN_Z),

@@ -56,11 +56,23 @@ class TranslateM : public Matr {
 public:
     explicit TranslateM(double x, double y, double z) :
             Matr({
-                         {1, 0,  0,  x},
-                         {0,  1, 0,  y},
-                         {0,  0,  1, z},
-                         {0,  0,  0,  1}
+                         {1, 0, 0, x},
+                         {0, 1, 0, y},
+                         {0, 0, 1, z},
+                         {0, 0, 0, 1}
                  }) {};
 };
+
+class CabinetProec : public Matr {
+public:
+    explicit CabinetProec(double l, double alfa) :
+            Matr({
+                         {1,             0,             0, 0},
+                         {0,             1,             0, 0},
+                         {l * cos(alfa), l * sin(alfa), 0, 0},
+                         {0,             0,             0, 1}
+                 }) {};
+};
+
 
 #endif //LAB1_AFIN3D_H

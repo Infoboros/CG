@@ -21,8 +21,16 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private slots:
+    void on_comboBox_currentIndexChanged(int index);
+
+    void on_textEdit_selectionChanged();
+
 private:
     double oldXpos;
+    double oldYpos;
+    int flag;
+    double sizeCenter;
 
     Matr dilatation;
     Matr rotate;
