@@ -6,6 +6,7 @@
 #include <QMainWindow>
 #include <QPainter>
 #include <QWheelEvent>
+#include <QMatrix4x4>
 
 #include "Headers/model3d.h"
 
@@ -32,8 +33,8 @@ private:
     int flag;
     double sizeCenter;
 
-    Matr dilatation;
-    Matr rotate;
+    QMatrix4x4 dilatation;
+    QMatrix4x4 rotate;
 
     Ui::MainWindow *ui;
     void paintEvent(QPaintEvent *p) override;

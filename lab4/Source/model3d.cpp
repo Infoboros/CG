@@ -3,7 +3,7 @@
 //
 #include "../Headers/model3d.h"
 
-Model operator*(Matr &matr, Model &model) {
+Model operator*(QMatrix4x4 &matr, Model &model) {
     vector<Point3D> newVec;
     for (auto &vec: model.vectorPoints)
         newVec.emplace_back(matr * vec.point);
@@ -20,7 +20,7 @@ void Model::draw(QPainter &painter) {
 
 }
 
-Object operator*(Matr matr, Object &object) {
+Object operator*(QMatrix4x4 matr, Object &object) {
     vector<Model> newVec;
     for (auto &model: object.vectorModels)
         newVec.push_back(matr * model);
@@ -37,12 +37,14 @@ void Object::drawFront(QPainter &painter) {
 }
 
 void Object::drawPorf(QPainter &painter) {
-    Matr rt = RotateMY(90*RAD);
+    QMatrix4x4 rt;
+    rt.rotate(90*RAD, 0, 1, 0);
     (rt*(*this)).draw(painter);
 }
 
 void Object::drawUp(QPainter &painter) {
-    Matr rt = RotateMX(90*RAD);
+    QMatrix4x4 rt;
+    rt.rotate(90*RAD, 1, 0, 0);
     (rt*(*this)).draw(painter);
 }
 

@@ -5,11 +5,13 @@
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent),
         ui(new Ui::MainWindow),
-        dilatation(DilatationM(1, 1, 1)),
-        rotate(RotateMY(0)),
+        dilatation(),
+        rotate(),
         flag(0),
         sizeCenter(15){
     ui->setupUi(this);
+    dilatation.scale(1);
+    rotate.rotate(0, 0, 1, 0);
 }
 
 MainWindow::~MainWindow() {
@@ -56,7 +58,8 @@ void MainWindow::paintEvent(QPaintEvent *p) {
 
 void MainWindow::wheelEvent(QWheelEvent *wheelevent) {
     double k = 1. + wheelevent->delta() / 10000.;
-    Matr dilatationMnog = DilatationM(k, k, k);
+    QMatrix4x4 dilatationMnog;
+    dilatationMnog.scale(k);
     dilatation = dilatationMnog * dilatation;
     repaint();
 }
@@ -71,24 +74,26 @@ void MainWindow::drawDinamic(QPainter &painter, double radius) {
     tumba = dilatation * tumba;
     tumba = rotate * tumba;
 
-    Matr proect = RotateMY(45 * RAD);
+    QMatrix4x4 proect, rt_x, rt_y;
+    proect.rotate(45*RAD, 0, 1, 0);
+
     if (flag == 1) {
         //косоугольная кабинетная
-        Matr rt_x = RotateMX(45 * RAD);
+        rt_x.rotate(45*RAD, 1, 0, 0);
         proect = (rt_x * proect);
     } else if (flag == 2) {
         //косоугольная свободная
-        Matr rt_x = RotateMX(30 * RAD);
+        rt_x.rotate(30*RAD, 1, 0, 0);
         proect = (rt_x * proect);
     } else if (flag == 3) {
         //прямоугольная диметрия
-        Matr rt_x = RotateMX((7 + 1. / 6.) * RAD);
-        Matr rt_y = RotateMY((41 + 25./60.) * RAD);
+        rt_x.rotate((7 + 1. / 6.) * RAD, 1, 0, 0);
+        rt_y.rotate((41 + 25./60.) * RAD, 0, 1, 0);
         proect = (rt_x * rt_y * proect);
     } else if (flag == 4) {
         //прямоугольная изометрия
-        Matr rt_x = RotateMX(30 * RAD);
-        Matr rt_y = RotateMY(30 * RAD);
+        rt_x.rotate(30*RAD, 1, 0, 0);
+        rt_y.rotate(30*RAD, 0, 1, 0);
         proect = (rt_x * rt_y * proect);
     }
 
@@ -105,24 +110,24 @@ void MainWindow::mouseMoveEvent(QMouseEvent *mouseEvent) {
         double newXPos = cursor().pos().x();
         double ky = 1. + (newXPos - oldXpos) / 10000.;
 
-//        double newYPos = cursor().pos().y();
-//        double kx = 1. + (newYPos - oldYpos) / 10000.;
+        double newYPos = cursor().pos().y();
+        double kx = 1. + (newYPos - oldYpos) / 10000.;
 
-        int mnogY = 1;
+        int mnogY = -1;
         if (newXPos < oldXpos)
-            mnogY = -1;
+            mnogY = 1;
         oldXpos = newXPos;
 
-//        int mnogX = 1;
-//        if (newYPos > oldYpos)
-//            mnogX = -1;
-//        oldYpos = newYPos;
-
-        Matr rotateMnogY = RotateMY(mnogY * ky * RAD);
-//        Matr rotateMnogX = RotateMZ(mnogX * kx * RAD);
+        int mnogX = 1;
+        if (newYPos > oldYpos)
+            mnogX = -1;
+        oldYpos = newYPos;
+        QMatrix4x4 rotateMnogY, rotateMnogX;
+        rotateMnogY.rotate(mnogY * ky * RAD, 0, 1, 0);
+        rotateMnogX.rotate(mnogX * kx * RAD, 1, 0, 0);
 
         rotate = rotateMnogY * rotate;
-//        rotate = rotateMnogX * rotate;
+        rotate = rotateMnogX * rotate;
         repaint();
     }
 }
