@@ -8,9 +8,9 @@ MainWindow::MainWindow(QWidget *parent) :
         dilatation(),
         rotate(),
         flag(0),
-        sizeCenter(15){
+        sizeCenter(15) {
     ui->setupUi(this);
-    dilatation.scale(1);
+    dilatation.scale(0.94);
     rotate.rotate(0, 0, 1, 0);
 }
 
@@ -58,9 +58,7 @@ void MainWindow::paintEvent(QPaintEvent *p) {
 
 void MainWindow::wheelEvent(QWheelEvent *wheelevent) {
     double k = 1. + wheelevent->delta() / 10000.;
-    QMatrix4x4 dilatationMnog;
-    dilatationMnog.scale(k);
-    dilatation = dilatationMnog * dilatation;
+    dilatation.scale(k);
     repaint();
 }
 
@@ -75,28 +73,45 @@ void MainWindow::drawDinamic(QPainter &painter, double radius) {
     tumba = rotate * tumba;
 
     QMatrix4x4 proect, rt_x, rt_y;
-    proect.rotate(45*RAD, 0, 1, 0);
 
-    if (flag == 1) {
+    if (flag == 0) {
+        //центральная
+        proect = QMatrix4x4(1., 0, 0, 0,
+                            0, 1., 0, 0,
+                            0, 0, 0, 0,
+                            0, 0, 1 / 400., 1.);
+    } else if (flag == 1) {
         //косоугольная кабинетная
-        rt_x.rotate(45*RAD, 1, 0, 0);
-        proect = (rt_x * proect);
+        double a_b = -cos(3.14 / 4.) / 2.;
+        proect = QMatrix4x4(1., 0, a_b, 0,
+                            0, 1., a_b, 0,
+                            0, 0, 0, 0,
+                            0, 0, 0, 1.);
     } else if (flag == 2) {
         //косоугольная свободная
-        rt_x.rotate(30*RAD, 1, 0, 0);
-        proect = (rt_x * proect);
+        double a_b = -cos(3.14 / 4.);
+        proect = QMatrix4x4(1., 0, a_b, 0,
+                            0, 1., a_b, 0,
+                            0, 0, 0, 0,
+                            0, 0, 0, 1.);
+        proect.scale(0.7);
     } else if (flag == 3) {
+        //Ортографическая
+        proect = QMatrix4x4(1., 0, 0, 0,
+                            0, 1., 0, 0,
+                            0, 0, 0, 0,
+                            0, 0, 0, 1.);
+    } else if (flag == 4) {
         //прямоугольная диметрия
         rt_x.rotate((7 + 1. / 6.) * RAD, 1, 0, 0);
-        rt_y.rotate((41 + 25./60.) * RAD, 0, 1, 0);
+        rt_y.rotate((41 + 25. / 60.) * RAD, 0, 1, 0);
         proect = (rt_x * rt_y * proect);
-    } else if (flag == 4) {
+    } else if (flag == 5) {
         //прямоугольная изометрия
-        rt_x.rotate(30*RAD, 1, 0, 0);
-        rt_y.rotate(30*RAD, 0, 1, 0);
+        rt_x.rotate(30 * RAD, 1, 0, 0);
+        rt_y.rotate(30 * RAD, 0, 1, 0);
         proect = (rt_x * rt_y * proect);
     }
-
 
     tumba = proect * tumba;
     tumba.draw(painter);
@@ -106,7 +121,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *mouseEvent) {
     if (!oldXpos || !oldYpos) {
         oldXpos = cursor().pos().x();
         oldYpos = cursor().pos().y();
-    }else {
+    } else {
         double newXPos = cursor().pos().x();
         double ky = 1. + (newXPos - oldXpos) / 10000.;
 
@@ -127,7 +142,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *mouseEvent) {
         rotateMnogX.rotate(mnogX * kx * RAD, 1, 0, 0);
 
         rotate = rotateMnogY * rotate;
-        rotate = rotateMnogX * rotate;
+//        rotate = rotateMnogX * rotate;
         repaint();
     }
 }
@@ -138,7 +153,12 @@ void MainWindow::on_comboBox_currentIndexChanged(int index) {
     repaint();
 }
 
-void MainWindow::on_textEdit_selectionChanged()
+void MainWindow::on_pushButton_clicked()
 {
-    sizeCenter = ui->textEdit->toPlainText().toInt();
+    sizeCenter = ui->textEdit->toPlainText().toDouble();
+    if (sizeCenter > 120.)
+        sizeCenter = 120;
+    if (sizeCenter <1)
+        sizeCenter = 1;
+    repaint();
 }
