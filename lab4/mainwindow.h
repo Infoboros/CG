@@ -22,18 +22,11 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-private slots:
-    void on_comboBox_currentIndexChanged(int index);
-
-    void on_pushButton_clicked();
-
 private:
     double oldXpos;
     double oldYpos;
-    int flag;
-    double sizeCenter;
+    double dilatation;
 
-    QMatrix4x4 dilatation;
     QMatrix4x4 rotate;
 
     Ui::MainWindow *ui;

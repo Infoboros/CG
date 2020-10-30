@@ -36,10 +36,13 @@ class Model {
 private:
     vector<Point3D> vectorPoints;
 public:
-    explicit Model(vector<Point3D> vector) : vectorPoints(std::move(vector)) {};
+    explicit Model(vector<Point3D> vector, QColor c) : vectorPoints(std::move(vector)), color(c) {};
+    QColor color;
 
     friend Model operator*(QMatrix4x4 &, Model &);
+    friend bool operator>(Model &, Model &);
 
+    Point3D getBariCenter();
     void draw(QPainter &painter);
 };
 
@@ -51,10 +54,7 @@ public:
 
     friend Object operator*(QMatrix4x4, Object &);
 
-    void draw(QPainter &painter);
-    void drawFront(QPainter &painter);
-    void drawPorf(QPainter &painter);
-    void drawUp(QPainter &painter);
+    void draw(QPainter &painter, QMatrix4x4 proec);
 };
 
 class Tumba : public Object {
@@ -64,11 +64,11 @@ public:
         Model inSquare({Point3D(-LEN_X, -LEN_Y, LEN_Z),
                         Point3D(LEN_X, -LEN_Y, LEN_Z),
                         Point3D(LEN_X, LEN_Y, LEN_Z),
-                        Point3D(-LEN_X, LEN_Y, LEN_Z)});
+                        Point3D(-LEN_X, LEN_Y, LEN_Z)}, Qt::red);
         Model centerSquare({Point3D(-LEN_X, -sizeH*k, LEN_Z),
                             Point3D(LEN_X, -sizeH*k, LEN_Z),
                             Point3D(LEN_X, sizeH*k, LEN_Z),
-                            Point3D(-LEN_X, sizeH*k, LEN_Z)});
+                            Point3D(-LEN_X, sizeH*k, LEN_Z)}, Qt::blue);
         QMatrix4x4 rt_y_90, t_up, t_down;
         rt_y_90.rotate(90*RAD, 0, 1, 0);
         t_up.translate(0, -20*LEN_Y, 0);
@@ -84,7 +84,7 @@ public:
         Model outSquareL({Point3D(-LEN_X-2, -21*LEN_Y, LEN_Z),
                           Point3D(-(LEN_X+LEN_Y*2), -21*LEN_Y, LEN_Z),
                           Point3D(-(LEN_X+LEN_Y*2), 21*LEN_Y, LEN_Z),
-                          Point3D(-LEN_X-2, 21*LEN_Y, LEN_Z)});
+                          Point3D(-LEN_X-2, 21*LEN_Y, LEN_Z)}, Qt::green);
         QMatrix4x4 t_back, t_rigth;
         t_back.translate(0, 0, -2*LEN_Z);
         t_rigth.translate(2*(LEN_X+LEN_Y), 0, 0);
@@ -97,7 +97,7 @@ public:
         Model outSquareS({Point3D(-LEN_X-2, 21*LEN_Y, -LEN_Z),
                           Point3D(-(LEN_X+LEN_Y*2), 21*LEN_Y, -LEN_Z),
                           Point3D(-(LEN_X+LEN_Y*2), 21*LEN_Y, LEN_Z),
-                          Point3D(-LEN_X-2, 21*LEN_Y, LEN_Z)});
+                          Point3D(-LEN_X-2, 21*LEN_Y, LEN_Z)}, Qt::black);
         QMatrix4x4 t_up_s;
         t_up_s.translate(0, -42*LEN_Y, 0);
         for (int i = 0; i < 2; ++i) {
