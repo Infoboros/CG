@@ -16,6 +16,10 @@ using namespace std;
 #define LEN_Y LEN_X/12.
 #define LEN_Z LEN_X
 
+#define CH_L_a 50
+#define CH_L_b 5
+#define CH_D 50
+
 #define RAD 1
 
 class Point3D {
@@ -47,66 +51,24 @@ public:
 };
 
 class Object {
-protected:
-    vector<Model> vectorModels;
 public:
     explicit Object(vector<Model> vector) : vectorModels(std::move(vector)) {};
 
     friend Object operator*(QMatrix4x4, Object &);
 
     void draw(QPainter &painter, QMatrix4x4 proec);
+
+    vector<Model> vectorModels;
 };
 
 class Tumba : public Object {
 public:
-    Tumba(double k, double sizeH) :
-            Object({}) {
-        Model inSquare({Point3D(-LEN_X, -LEN_Y, LEN_Z),
-                        Point3D(LEN_X, -LEN_Y, LEN_Z),
-                        Point3D(LEN_X, LEN_Y, LEN_Z),
-                        Point3D(-LEN_X, LEN_Y, LEN_Z)}, Qt::red);
-        Model centerSquare({Point3D(-LEN_X, -sizeH*k, LEN_Z),
-                            Point3D(LEN_X, -sizeH*k, LEN_Z),
-                            Point3D(LEN_X, sizeH*k, LEN_Z),
-                            Point3D(-LEN_X, sizeH*k, LEN_Z)}, Qt::blue);
-        QMatrix4x4 rt_y_90, t_up, t_down;
-        rt_y_90.rotate(90*RAD, 0, 1, 0);
-        t_up.translate(0, -20*LEN_Y, 0);
-        t_down.translate(0, 20*LEN_Y, 0);
-        for (int i = 0; i < 4; ++i) {
-            vectorModels.push_back(centerSquare);
-            vectorModels.push_back(t_up*inSquare);
-            vectorModels.push_back(t_down*inSquare);
-            inSquare = rt_y_90*inSquare;
-            centerSquare = rt_y_90*centerSquare;
-        }
+    Tumba(double k, double sizeH);;
+};
 
-        Model outSquareL({Point3D(-LEN_X-2, -21*LEN_Y, LEN_Z),
-                          Point3D(-(LEN_X+LEN_Y*2), -21*LEN_Y, LEN_Z),
-                          Point3D(-(LEN_X+LEN_Y*2), 21*LEN_Y, LEN_Z),
-                          Point3D(-LEN_X-2, 21*LEN_Y, LEN_Z)}, Qt::green);
-        QMatrix4x4 t_back, t_rigth;
-        t_back.translate(0, 0, -2*LEN_Z);
-        t_rigth.translate(2*(LEN_X+LEN_Y), 0, 0);
-        for (int i = 0; i < 2; ++i) {
-            vectorModels.push_back(outSquareL);
-            vectorModels.push_back(t_rigth*outSquareL);
-            outSquareL = t_back*outSquareL;
-        }
-
-        Model outSquareS({Point3D(-LEN_X-2, 21*LEN_Y, -LEN_Z),
-                          Point3D(-(LEN_X+LEN_Y*2), 21*LEN_Y, -LEN_Z),
-                          Point3D(-(LEN_X+LEN_Y*2), 21*LEN_Y, LEN_Z),
-                          Point3D(-LEN_X-2, 21*LEN_Y, LEN_Z)}, Qt::black);
-        QMatrix4x4 t_up_s;
-        t_up_s.translate(0, -42*LEN_Y, 0);
-        for (int i = 0; i < 2; ++i) {
-            vectorModels.push_back(outSquareS);
-            vectorModels.push_back(t_up_s*outSquareS);
-            outSquareS = t_rigth*outSquareS;
-        }
-
-    };
+class Chear : public Object{
+public:
+    Chear();
 };
 
 #endif //LAB1_MODEL3D_H

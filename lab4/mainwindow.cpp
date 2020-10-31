@@ -48,13 +48,16 @@ void MainWindow::drawAxis(QPainter &painter, double radius) {
 }
 
 void MainWindow::drawDinamic(QPainter &painter, double radius) {
-    Object tumba = Tumba(radius / 290., 50);
-    tumba = rotate * tumba;
+    Object obj = Chear();
+    QMatrix4x4 r;
+    r.rotate(45, 1, 0, 0);
+//    obj = r*obj;
+    obj = rotate * obj;
     QMatrix4x4 proect(1., 0, 0, 0,
                       0, 1., 0, 0,
                       0, 0, 0, 0,
                       0, 0, 1 / dilatation, 1.);
-    tumba.draw(painter, proect);
+    obj.draw(painter, proect);
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *mouseEvent) {

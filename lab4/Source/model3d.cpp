@@ -53,7 +53,7 @@ Point3D Model::getBariCenter() {
         z += p.z();
     }
 
-    return {x / size, y / size, z/size};
+    return {x / size, y / size, z / size};
 }
 
 Object operator*(QMatrix4x4 matr, Object &object) {
@@ -77,7 +77,7 @@ void Object::draw(QPainter &painter, QMatrix4x4 proec) {
 
     }
     for (auto &model: vectorModels)
-        (proec*model).draw(painter);
+        (proec * model).draw(painter);
 }
 
 double Point3D::x() {
@@ -90,4 +90,124 @@ double Point3D::y() {
 
 double Point3D::z() {
     return point[2];
+}
+
+Chear::Chear() : Object({}) {
+//    формируем стенки ножек и другие грани
+    Object leg({});
+    Model leg_b({
+                        Point3D(-CH_L_b, -CH_L_a, CH_L_b),
+                        Point3D(CH_L_b, -CH_L_a, CH_L_b),
+                        Point3D(CH_L_b, CH_L_a, CH_L_b),
+                        Point3D(-CH_L_b, CH_L_a, CH_L_b),
+                }, Qt::green);
+    Model leg_u({
+                        Point3D(-CH_L_b, -CH_L_a, -CH_L_b),
+                        Point3D(CH_L_b, -CH_L_a, -CH_L_b),
+                        Point3D(CH_L_b, -CH_L_a, CH_L_b),
+                        Point3D(-CH_L_b, -CH_L_a, CH_L_b),
+                }, Qt::red);
+
+    QMatrix4x4 r_90, leg_d, leg_2_start;
+    r_90.rotate(90, 0, 1, 0);
+    leg_d.translate(0, 2 * CH_L_a, 0);
+//    опускаем и выносим ножку на нужное место
+    leg_b = leg_d * leg_b;
+    leg_u = leg_d * leg_u;
+    leg_2_start.translate(CH_D, 0, CH_D);
+
+//    крутим грани ножки что бы сформировать ее полностью
+    for (int i = 0; i < 4; ++i) {
+        leg.vectorModels.push_back(leg_2_start * leg_b);
+        leg_b = r_90 * leg_b;
+    }
+    leg.vectorModels.push_back(leg_2_start * leg_u);
+    leg_u = leg_d * leg_u;
+    leg.vectorModels.push_back(leg_2_start * leg_u);
+
+    //добавляем 4 ножки в нашу модель
+    for (int i = 0; i < 4; ++i) {
+        for (auto &model:leg.vectorModels)
+            vectorModels.push_back(r_90 * model);
+
+        r_90.rotate(90, 0, 1, 0);
+    };
+
+//    крышка
+    Model up({
+                     Point3D(-CH_D - CH_L_b, -CH_L_a, -CH_D - CH_L_b),
+                     Point3D(CH_D + CH_L_b, -CH_L_a, -CH_D - CH_L_b),
+                     Point3D(CH_D + CH_L_b, -CH_L_a, CH_D + CH_L_b),
+                     Point3D(-CH_D - CH_L_b, -CH_L_a, CH_D + CH_L_b)
+             }, Qt::red);
+    up = leg_d * up;
+
+    vectorModels.push_back(up);
+//    матрица для поднятия up и отрисовки верхней части сидушки
+    QMatrix4x4 up_up;
+    up_up.translate(0, -CH_L_a / 4., 0);
+
+    vectorModels.push_back(up_up * up);
+
+    //    стенка крышки
+    Model up_b({
+                       Point3D(-CH_D - CH_L_b, CH_L_a, CH_D + CH_L_b),
+                       Point3D(CH_D + CH_L_b, CH_L_a, CH_D + CH_L_b),
+                       Point3D(CH_D + CH_L_b, CH_L_a - CH_L_a / 4., CH_D + CH_L_b),
+                       Point3D(-CH_D - CH_L_b, CH_L_a - CH_L_a / 4., CH_D + CH_L_b)
+               }, Qt::blue);
+    for (int i = 0; i < 4; ++i) {
+        vectorModels.push_back(up_b);
+        up_b = r_90*up_b;
+    }
+
+}
+
+Tumba::Tumba(double k, double sizeH) :
+        Object({}) {
+    Model inSquare({Point3D(-LEN_X, -LEN_Y, LEN_Z),
+                    Point3D(LEN_X, -LEN_Y, LEN_Z),
+                    Point3D(LEN_X, LEN_Y, LEN_Z),
+                    Point3D(-LEN_X, LEN_Y, LEN_Z)}, Qt::red);
+    Model centerSquare({Point3D(-LEN_X, -sizeH * k, LEN_Z),
+                        Point3D(LEN_X, -sizeH * k, LEN_Z),
+                        Point3D(LEN_X, sizeH * k, LEN_Z),
+                        Point3D(-LEN_X, sizeH * k, LEN_Z)}, Qt::blue);
+    QMatrix4x4 rt_y_90, t_up, t_down;
+    rt_y_90.rotate(90 * RAD, 0, 1, 0);
+    t_up.translate(0, -20 * LEN_Y, 0);
+    t_down.translate(0, 20 * LEN_Y, 0);
+    for (int i = 0; i < 4; ++i) {
+        vectorModels.push_back(centerSquare);
+        vectorModels.push_back(t_up * inSquare);
+        vectorModels.push_back(t_down * inSquare);
+        inSquare = rt_y_90 * inSquare;
+        centerSquare = rt_y_90 * centerSquare;
+    }
+
+    Model outSquareL({Point3D(-LEN_X - 2, -21 * LEN_Y, LEN_Z),
+                      Point3D(-(LEN_X + LEN_Y * 2), -21 * LEN_Y, LEN_Z),
+                      Point3D(-(LEN_X + LEN_Y * 2), 21 * LEN_Y, LEN_Z),
+                      Point3D(-LEN_X - 2, 21 * LEN_Y, LEN_Z)}, Qt::green);
+    QMatrix4x4 t_back, t_rigth;
+    t_back.translate(0, 0, -2 * LEN_Z);
+    t_rigth.translate(2 * (LEN_X + LEN_Y), 0, 0);
+    for (int i = 0; i < 2; ++i) {
+        vectorModels.push_back(outSquareL);
+        vectorModels.push_back(t_rigth * outSquareL);
+        outSquareL = t_back * outSquareL;
+    }
+
+    Model outSquareS({Point3D(-LEN_X - 2, 21 * LEN_Y, -LEN_Z),
+                      Point3D(-(LEN_X + LEN_Y * 2), 21 * LEN_Y, -LEN_Z),
+                      Point3D(-(LEN_X + LEN_Y * 2), 21 * LEN_Y, LEN_Z),
+                      Point3D(-LEN_X - 2, 21 * LEN_Y, LEN_Z)}, Qt::black);
+    QMatrix4x4 t_up_s;
+    t_up_s.translate(0, -42 * LEN_Y, 0);
+    for (int i = 0; i < 2; ++i) {
+        vectorModels.push_back(outSquareS);
+        vectorModels.push_back(t_up_s * outSquareS);
+        outSquareS = t_rigth * outSquareS;
+    }
+
 }
