@@ -70,9 +70,14 @@ void MainWindow::mouseMoveEvent(QMouseEvent *mouseEvent) {
 void MainWindow::on_pushButton_clicked()
 {
     c = ui->plainTextEdit->toPlainText().toDouble()*10.;
+    if (c<200)
+        c = 200;
     double sH = ui->plainTextEdit_2->toPlainText().toDouble();
-    if ((sH < 100) & (sH > 2))
-        obj = Tumba(1, sH);
+    if (sH>=100)
+        sH = 100;
+    else if (sH <= 5)
+        sH = 5;
+    obj = Tumba(1, sH);
     repaint();
 }
 
