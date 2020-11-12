@@ -5,10 +5,13 @@
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent),
         ui(new Ui::MainWindow),
-        dilatation(500),
-        rotate(){
+        c(400),
+        rotate(),
+        obj(Tumba(1, 50)),
+        mousePosition(0, 0),
+        mouseFlag(false){
     ui->setupUi(this);
-    rotate.rotate(0, 0, 1, 0);
+    mousePosition = this->pos();
 }
 
 MainWindow::~MainWindow() {
@@ -38,54 +41,46 @@ void MainWindow::paintEvent(QPaintEvent *p) {
 }
 
 void MainWindow::wheelEvent(QWheelEvent *wheelevent) {
-    dilatation += wheelevent->delta() / 10.;
+    QMatrix4x4 tr;
+    tr.translate(0, 0, wheelevent->delta()/50.);
+    obj = tr*obj;
     repaint();
 }
 
-void MainWindow::drawAxis(QPainter &painter, double radius) {
-    painter.drawLine(-radius / 2., -radius, -radius / 2., radius);
-    painter.drawLine(-radius, -radius / 2., radius, -radius / 2.);
-}
-
 void MainWindow::drawDinamic(QPainter &painter, double radius) {
-    Object obj = Chear();
-    QMatrix4x4 r;
-    r.rotate(45, 1, 0, 0);
-//    obj = r*obj;
-    obj = rotate * obj;
+    obj = rotate*obj;
     QMatrix4x4 proect(1., 0, 0, 0,
                       0, 1., 0, 0,
                       0, 0, 0, 0,
-                      0, 0, 1 / dilatation, 1.);
+                      0, 0, 1/c, 1.);
     obj.draw(painter, proect);
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *mouseEvent) {
-    if (!oldXpos || !oldYpos) {
-        oldXpos = cursor().pos().x();
-        oldYpos = cursor().pos().y();
-    } else {
-        double newXPos = cursor().pos().x();
-        double ky = 1. + (newXPos - oldXpos) / 10000.;
-
-        double newYPos = cursor().pos().y();
-        double kx = 1. + (newYPos - oldYpos) / 10000.;
-
-        int mnogY = -1;
-        if (newXPos < oldXpos)
-            mnogY = 1;
-        oldXpos = newXPos;
-
-        int mnogX = 1;
-        if (newYPos > oldYpos)
-            mnogX = -1;
-        oldYpos = newYPos;
-        QMatrix4x4 rotateMnogY, rotateMnogX;
-        rotateMnogY.rotate(mnogY * ky * RAD, 0, 1, 0);
-        rotateMnogX.rotate(mnogX * kx * RAD, 1, 0, 0);
-
-        rotate = rotateMnogY * rotate;
-//        rotate = rotateMnogX * rotate;
+    if (mouseFlag) {
+        QPoint dp = mouseEvent->pos() - mousePosition;
+        //меняем вращение
+        rotate = QMatrix4x4();
+        rotate.rotate(-dp.x()/2., 0, 1, 0);
+        rotate.rotate(dp.y()/2., 1, 0, 0);
+        mousePosition = mouseEvent->pos();
         repaint();
     }
+}
+void MainWindow::on_pushButton_clicked()
+{
+    c = ui->plainTextEdit->toPlainText().toDouble()*10.;
+    double sH = ui->plainTextEdit_2->toPlainText().toDouble();
+    if ((sH < 100) & (sH > 2))
+        obj = Tumba(1, sH);
+    repaint();
+}
+
+void MainWindow::mousePressEvent(QMouseEvent *event) {
+    mousePosition = event->pos();
+    mouseFlag = true;
+}
+
+void MainWindow::mouseReleaseEvent(QMouseEvent *) {
+    mouseFlag = false;
 }

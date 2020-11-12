@@ -44,7 +44,7 @@ public:
     QColor color;
 
     friend Model operator*(QMatrix4x4 &, Model &);
-    friend bool operator>(Model &, Model &);
+    friend bool operator<(Model &, Model &);
 
     Point3D getBariCenter();
     void draw(QPainter &painter);

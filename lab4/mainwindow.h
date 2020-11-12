@@ -22,20 +22,26 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-private:
-    double oldXpos;
-    double oldYpos;
-    double dilatation;
+private slots:
+    void on_pushButton_clicked();
 
+private:
+    double c;
+
+    QPoint mousePosition;
     QMatrix4x4 rotate;
+
+    Object obj;
+    bool mouseFlag;
 
     Ui::MainWindow *ui;
     void paintEvent(QPaintEvent *p) override;
     // Обработчик события прокрутки колеса мыши
     void wheelEvent(QWheelEvent* ) override;
     void mouseMoveEvent(QMouseEvent* );
+    void mousePressEvent(QMouseEvent* );
+    void mouseReleaseEvent(QMouseEvent* );
 
-    void drawAxis(QPainter &painter, double radius);
     void drawDinamic(QPainter &painter, double radius);
 };
 
